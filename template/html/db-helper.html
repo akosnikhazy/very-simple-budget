@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/c.php{{nocache}}" />
+	<link rel="shortcut icon" href="css/img/icon.png">
+	<style>
+		#query,#result{
+			width: 500px;
+			margin: 0 auto;
+		}
+		#query{
+			text-align: center;
+			border-bottom:1px solid #666;
+			padding-bottom:30px;
+		}
+		#query textarea{
+			width:100%;
+			height:300px;
+		}
+		</style>
+</head>
+<body>
+	<form method="post" action="" id="query">
+		<textarea name="sql">
+			
+				{{query}}
+		</textarea><br>
+		<input type="submit" name="query" value="Query">
+	
+	</form>
+	<div id="result">
+		
+		{{result}}
+		
+	</div>
+</body>
+</html>

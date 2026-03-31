@@ -1,0 +1,149 @@
+	{{siteheader}}
+	{{statusmessage}}
+	{{menu}}
+	<div id="editaccount" class="panel">
+		<form method="post" action="">
+			{{csrf}}
+			<input type="hidden" name="accountid" id="editaccountid" value="">
+			<label for="editaccountname">Name:</label>
+			<input type="text" name="name" id="editaccountname" required><br>
+			<label for="editaccounttype">Type:</label>
+			<select name="type" id="editaccounttype">
+				<option value="digital">Digital</option>
+				<option value="cash">Cash</option>
+			</select><br>
+			
+			<label for="editaccountdescription">Description:</label>
+			<input type="text" name="description" id="editaccountdescription"><br>
+			<input type="submit" name="editaccount" value="Edit account" class="button btngreen">
+		</form><br>
+		<form method="post">
+			{{csrf}}
+			<input type="hidden" name="accountid" id="disableaccountid" value="">
+			<input type="submit" id="disable" name="disable" value="Disable account" class="button btnred"> <span class="button btngrey close">Close</span>
+		</form>
+	</div>
+	<div id="newaccount" class="panel">
+		<h2>New account:</h2>
+		<form method="post" action="" id="newaccountform">
+			{{csrf}}
+			<label for="newaccountname">Name:</label>
+			<input type="text" name="name" id="newaccountname" required><br>
+			<label for="newaccounttype">Type:</label>
+			<select name="type" id="newaccounttype">
+				<option value="digital" selected>Digital</option>
+				<option value="cash">Cash</option>
+			</select><br>
+			<label for="newaccountcurrency">Currency:</label>
+			<select name="currency" id="newaccounttype">
+				{{currencylist}}
+			</select><br>
+			<label for="newaccountdescription">Description:</label>
+			<input type="text" name="description" id="newaccountdescription"><br>
+			<input type="submit" name="newaccount" value="Add account" class="button btngreen">  <span class="button btngrey close">Close</span>
+		</form>
+	</div>
+	<div id="accounts">
+		<button class="button btncircle btngreen addbuttons" id="newaccountbutton">+</button>
+		<div class="roundtablewrapper">
+			<table>
+				<thead>
+					<tr>
+						<th>
+							Name
+						</th>
+						<th>
+							Type
+						</th>
+						<th>
+							Currency
+						</th>
+						<th>
+							Holding
+						</th>
+						<th>
+							Description
+						</th>
+						<th>
+							Created at
+						</th>
+						<th>
+							Action
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{accounttr}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script nonce="{{cspnonce}}">
+		"use strict";
+		
+		document.addEventListener('DOMContentLoaded', function () {
+   
+			const newAccountButton 		= document.getElementById("newaccountbutton"); 
+			const newAccount 			= document.getElementById("newaccount");
+			const editor 	 			= document.getElementById("editaccount");
+			const disableButton 		= document.getElementById("disable");
+			const editAccountName		= document.getElementById('editaccountname');       
+			const editAccountType		= document.getElementById('editaccounttype');     
+			const editAccountDescription= document.getElementById('editaccountdescription');
+			const editAccountId 		= document.getElementById('editaccountid');
+			const disableAccountId 		= document.getElementById('disableaccountid');
+			const disableAccountButton 	= document.getElementById('disable');
+			const editLinks 			= document.querySelectorAll('span.accountedit');
+			const closeButtons			= document.querySelectorAll('span.close');
+			
+			function getCellValue(row, index) 
+			{
+				return row.cells[index].textContent.trim();
+			}
+
+			function openEditor(event) 
+			{
+				const span   = event.currentTarget;             
+				const tr     = span.closest('tr');         
+				
+				
+			
+				editor.style.display = 'block';
+
+
+				editAccountName.value 		 = getCellValue(tr, 0);
+				editAccountType.value 		 = getCellValue(tr, 1);
+				editAccountDescription.value = getCellValue(tr, 4);
+				editAccountId.value 		 =
+				disableAccountId.value		 = span.dataset.accountid;
+
+				var accountDisabled = (span.dataset.accountstatus == 'accountdisabled')? true : false;
+				disableAccountButton.value = (accountDisabled) ? "Enable account" : "Disable account";
+				
+				console.log(span.dataset.accountstatus);
+
+			}
+			
+			newAccount.style.display = 'none';
+			editor.style.display 	 = 'none';
+
+			newAccountButton.addEventListener('click',function(){
+				newAccount.style.display = 'block';
+			});
+
+			editLinks.forEach(span => {
+				span.addEventListener('click', openEditor);
+			});
+			
+			closeButtons.forEach(span => {
+				span.addEventListener('click', function() {
+					this.closest('.panel').style.display = 'none';
+				});
+			});
+
+		});
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,6 @@
+{
+	"listItemText":"list item - ",
+	"someText":"This is some text",
+	"complete":"completed",
+	"formatedText":"This text will be formated, you can add as many %s and %d and %e etc. as you wish"
+}

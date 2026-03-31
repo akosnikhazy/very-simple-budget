@@ -1,0 +1,71 @@
+	{{siteheader}}
+	{{statusmessage}}
+	{{menu}}
+	<div id="transactionledgercontrols" class="panel">
+		<form method="get" action="">
+			{{thispageview}}
+			<input type="date" name="rangefrom" value="{{rangefrom}}"> - <input type="date" name="rangeto" value="{{rangeto}}">
+			<label>Account: <select name="account">
+				<option value="0" {{nulloptionselected}}>All</option>
+				{{accounts}}
+			</select></label>  
+			<input type="submit" class="button btngrey" value="query"> <span id="edittransactions" class="button btngrey">Edit Transactions</span>
+			
+		</form>
+		
+		<div id="transactionrowcount">Transactions on page: {{numrows}} / <span title="all transactions">{{allrows}}</span> | <a href="index.php?view=transaction-ledger-export&from={{rangefrom}}&to={{rangefrom}}&account={{selectedaccount}}" title="CSV file without the 1000 entry limit the page has">Export This</a> | <a href="index.php?view=transaction-ledger-export" title="CSV file with all transactions in the whole database">Export All</a></div>
+	
+	</div>
+		
+	<div id="transactions" class="roundtablewrapper">
+		<table id="transactionstable">
+			<thead>
+				<tr>
+					<th><a href="?view=transaction-ledger&{{querystring}}order={{buttonorder}}">posted at {{orderarrow}}</a></th>
+					<th>account</th>
+					<th id="amounthead">amount</th>
+					<th>category</th>
+					<th>description</th>
+					<th>action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{transactions}}
+			</tbody>
+		</table>
+	</div>
+</body>
+<script nonce="{{cspnonce}}">
+"use strict";
+document.addEventListener('DOMContentLoaded', function () {
+	const editTransactionsButton = document.getElementById("edittransactions");
+	const deleteButtons 		 = document.querySelectorAll('[name="deletetransaction"]');
+	const deleteColumn 			 = document.querySelectorAll('th:last-child, td:last-child');
+
+
+	deleteButtons.forEach(function(btn) {
+		btn.addEventListener('click', function(e) {
+			if (!confirm('Are you sure you want to discard this transaction?')) {
+				e.preventDefault();
+			}
+		});
+	});
+
+	deleteButtons.forEach(function(btn) {
+		btn.style.opacity = '0';
+		btn.disabled = true;
+	});
+
+	editTransactionsButton.addEventListener('click', function() {
+		const isDisabled = deleteButtons[0].disabled;
+
+		deleteButtons.forEach(function(btn) {
+			btn.style.opacity = isDisabled ? '1' : '0';
+			btn.disabled = !isDisabled;
+		});
+
+		editTransactionsButton.textContent = isDisabled ? 'Done editing' : 'Edit transactions';
+	});
+});
+</script>
+</html>

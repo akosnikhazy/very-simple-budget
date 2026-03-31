@@ -1,0 +1,82 @@
+	{{siteheader}}
+	{{statusmessage}}
+	{{menu}}
+	<div id="settings">
+		
+		<form method="post" action="" class="panel">
+			<h2>General Settings</h2>
+			{{csrf}}
+			<div id="general">
+				<p class="small">This will be the currency that the budget uses. Any account in this currency will be part of the budget. Any other currency is a spending you should categorize.</p>
+				
+				<label for="basecurrency">Base currency</label><select name="basecurrency" id="basecurrency">{{currencylist}}</select>
+
+				<p class="small">If this is on, you can note if the transactions was a want or need. Wants are things you do not have to buy but you buy. Needs are things you have to buy no matter what. Savings category is not part of this.</p>
+				<label for="wantsneeds">Wants or needs</label>
+				<br><label><span class="onofflabel">On:</span><input type="radio" name="wantsneeds"  value="on" {{wantsneedsonselected}}></label>
+				<br><label><span class="onofflabel">Off:</span><input type="radio" name="wantsneeds" value="off" {{wantsneedsoffselected}}></label> 
+				
+				<br>
+				<p class="small">You can not save without the password!</p>
+				<label for="oldpw">Password</label><input type="password" id="oldpw" name="oldpw" value="" required><br>
+				<br>
+				<input type="submit" name="general" value="Update settings" class="button btngreen">
+			</div>
+		</form>
+		
+		<form method="post" action="" class="panel">
+			<h2>User Settings</h2>
+			{{csrf}}
+			<div id="user">
+				<input type="hidden" name="originalname" value="{{username}}">
+				<label for="username">User</label><input type="text" id="username" name="username" value="{{username}}" required readonly><br>
+				<label for="oldpw">Old Password</label><input type="password" id="oldpw" name="oldpw" value="" required><br>
+				<label for="newpw">New Password</label><input type="password" id="newpw" name="newpw" value=""><br>
+				<label for="newpw2">Repeat ⇪</label><input type="password" id="newpw2" name="newpw2" value=""><br>
+
+				<input type="submit" name="user" value="Update data"  class="button btngreen">
+			</div>
+		</form>
+		<div class="panel" id="backupmethods">
+			<h2>Backup methods</h2>
+				<h3>Automatic Backups</h3>
+			<form method="post" action="">
+				{{csrf}}
+				<p class="small">If this is on you at every login an automatic backup of the database is made on the server!</p>
+				<label class="labelnotblock">Create automatic backups? <input type="checkbox" name="backups" {{backupschecked}}></label><br>
+					<br><br>
+				<label for="bofp">Password</label><input type="password" id="bofp" name="oldpw" value="" required><br>
+				<p class="small">You can not save without the password!</p>
+				<input type="submit"  class="button btngreen" value="Save" name="backuponoff">
+			</form><br><hr><br>
+			<h3>Download Database</h3>
+			<form method="post" action="?view=dbdownload">
+				{{csrf}}
+				<p class="small">With the password you can download the whole database as is.</p>
+				<label for="dlbp">Password</label><input type="password" id="dlbp" name="oldpw" value="" required><br>
+				<input type="submit" class="button" value="Download database file" name="download"> ({{dbsize}})
+			</form>
+		</div>
+	</div>
+	<script nonce="{{cspnonce}}">
+		"user strict";
+		function checkPasswordInputs() {
+			document.querySelectorAll('form').forEach(form => {
+				const passwordInputs = form.querySelectorAll('input[type="password"]');
+				const submitBtn = form.querySelector('input[type="submit"]');
+				
+				if (!submitBtn || passwordInputs.length === 0) return;
+
+				const hasEmpty = Array.from(passwordInputs).some(input => input.value.trim() === '');
+				submitBtn.disabled = hasEmpty;
+			});
+		}
+
+		document.querySelectorAll('input[type="password"]').forEach(input => {
+			input.addEventListener('input', checkPasswordInputs);
+		});
+
+		checkPasswordInputs();
+	</script>
+</body>
+</html>

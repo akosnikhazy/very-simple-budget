@@ -1,0 +1,37 @@
+<div id="menu">
+    <div id="hamburger">
+        🍔
+    </div>
+    <nav id="navigationmenu">
+        <ul>
+            <!-- TODO: make this generated automatically based on the router -->
+            <li class="{{selectedmain}}"><a href="?view=main">Main</a></li>
+            <li class="{{selectedbudget}}"><a href="?view=budget">Budget</a></li>
+            <li class="{{selectedtransaction-ledger}}"><a href="?view=transaction-ledger">Ledger</a></li>
+            <li class="{{selectedaccount}}"><a href="?view=account">Account</a></li>
+            <li class="{{selectedsettings}}"><a href="?view=settings">Settings</a></li>
+            <li><a href="?view=logout">Log out</a></li>
+        </ul>
+    </nav>
+</div>
+<script nonce="{{cspnonce}}">
+    "use strict";
+    document.addEventListener('DOMContentLoaded', function () {
+	    const navmenu   = document.getElementById('navigationmenu');
+        const hamburger = document.getElementById('hamburger');
+      
+
+        navmenu.style.display = 'none';
+
+        hamburger.addEventListener('click',function(){
+            if(navmenu.style.display == 'none')
+            {
+                navmenu.style.display = 'block';
+                return;
+            }
+
+            navmenu.style.display = 'none'
+        });
+
+	});
+</script>

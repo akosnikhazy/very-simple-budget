@@ -1,0 +1,206 @@
+	{{siteheader}}
+	{{statusmessage}}
+	{{menu}}
+	<div id="budget">
+		<form method="get" action="" id="budgetdateform">
+			{{thispageview}}
+			<input type="date" name="month" value="{{selecteddate}}"> <input type="submit" name="jump" value="Select">
+		</form>
+ 	Today:<br>
+		<div id="today">
+		
+			<span class="panel">All: {{todayspending}}/{{todaybudget}}</span>
+			<span class="panel">Food: {{todayspendingfood}}/{{todaybudgetfood}}</span>
+			<span class="panel">Entertainment: {{todayspendingentertainment}}/{{todaybudgetentertainment}}</span>
+		</div>
+		<div id="wantsandneeds">{{wantsandneeds}}</div>
+		<hr>
+		<div id="bars" class="panel">
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percsaving}}%" data-perc="{{percsaving}}" data-saving="1">Saving: {{spentsaving}}/{{budgetsaving}} ({{percsaving}}%)</div>
+			</div>
+			
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{perchousing}}%" data-perc="{{perchousing}}">Housing: {{spenthousing}}/{{budgethousing}} ({{perchousing}}%)</div>
+			</div>
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percfood}}%" data-perc="{{percfood}}">Food: {{spentfood}}/{{budgetfood}} ({{percfood}}%)</div>
+			</div>
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{perctransportation}}%" data-perc="{{perctransportation}}">Transportation: {{spenttransportation}}/{{budgettransportation}} ({{perctransportation}}%)</div>
+			</div>
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percutilities}}%" data-perc="{{percutilities}}">Utilities: {{spentutilities}}/{{budgetutilities}} ({{percutilities}}%)</div>
+			</div>
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percinsurance}}%" data-perc="{{percinsurance}}">Insurance: {{spentinsurance}}/{{budgetinsurance}} ({{percinsurance}}%)</div>
+			</div>
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percmedical}}%" data-perc="{{percmedical}}">Medical & Healthcare: {{spentmedical}}/{{budgetmedical}} ({{percmedical}}%)</div>
+			</div>
+
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percdebt}}%" data-perc="{{percdebt}}">Debt: {{spentdebt}}/{{budgetdebt}} ({{percdebt}}%)</div>
+			</div>
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percentertainment}}%" data-perc="{{percentertainment}}">Entertainment: {{spententertainment}}/{{budgetentertainment}} ({{percentertainment}}%)</div>
+			</div>
+			
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percsubscription}}%" data-perc="{{percsubscription}}">Subscription: {{spentsubscription}}/{{budgetsubscription}} ({{percsubscription}}%)</div>
+			</div>
+
+			<div class="bar">
+				<div class="barfill barfillgreen" style="width:{{percother}}%" data-perc="{{percother}}">Other: {{spentother}}/{{budgetother}} ({{percother}}%)</div>
+			</div>
+
+				
+		</div>
+		
+		<table class="norowstyle" id="budgetdata">
+			<tbody>
+				<tr>
+					<td>Income this month:</td>
+					<td>{{income}}</td>
+				</tr>
+				<tr>
+					<td>Spending this month:</td>
+					<td>{{spending}}</td>
+				</tr>
+				<tr>
+					<td>Balance:</td>
+					<td class="difamount">{{balance}} ({{percbalance}}%)</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="roundtablewrapper">
+			<table id="budgettable">
+				<thead>
+					<tr>
+						<th>Category</th>
+						<th>Monthly limit</th>
+						<th>Spent</th>
+						<th>Difference</th>
+						<th>%</th>
+					</tr>
+				</thead>
+				<tbody>	
+					<tr><td>Saving</td><td>{{budgetsaving}}</td><td>{{spentsaving}}</td><td class="difamount">{{difsaving}}</td><td>{{percsaving}}%</td></tr>
+					<tr><td>Housing</td><td>{{budgethousing}}</td><td>{{spenthousing}}</td><td class="difamount">{{difhousing}}</td><td>{{perchousing}}%</td></tr>
+					<tr><td>Food</td><td>{{budgetfood}}</td><td>{{spentfood}}</td><td class="difamount">{{diffood}}</td><td>{{percfood}}%</td></tr>
+					<tr><td>Transportation</td><td>{{budgettransportation}}</td><td>{{spenttransportation}}</td><td class="difamount">{{diftransportation}}</td><td>{{perctransportation}}%</td></tr>
+					<tr><td>Utilities</td><td>{{budgetutilities}}</td><td>{{spentutilities}}</td><td class="difamount">{{difutilities}}</td><td>{{percutilities}}%</td></tr>
+					<tr><td>Insurance</td><td>{{budgetinsurance}}</td><td>{{spentinsurance}}</td><td class="difamount">{{difinsurance}}</td><td>{{percinsurance}}%</td></tr>
+					<tr><td>Medical & Healthcare</td><td>{{budgetmedical}}</td><td>{{spentmedical}}</td><td class="difamount">{{difmedical}}</td><td>{{percmedical}}%</td></tr>
+					<tr><td>Debt</td><td>{{budgetdebt}}</td><td>{{spentdebt}}</td><td class="difamount">{{difdebt}}</td><td>{{percdebt}}%</td></tr>
+					<tr><td>Entertainment</td><td>{{budgetentertainment}}</td><td>{{spententertainment}}</td><td class="difamount">{{difentertainment}}</td><td>{{percentertainment}}%</td></tr>
+					<tr><td>Subscription</td><td>{{budgetsubscription}}</td><td>{{spentsubscription}}</td><td class="difamount">{{difsubscription}}</td><td>{{percsubscription}}%</td></tr>
+					<tr><td>Other</td><td>{{budgetother}}</td><td>{{spentother}}</td><td class="difamount">{{difother}}</td><td>{{percother}}%</td></tr>
+				</tbody>
+			</table>
+		</div>
+		
+
+	</div>
+	<button class="button btncircle btngreen addbuttons" id="newbudgetbutton">+</button>
+		
+	<div id="newbudget" class="panel">
+		<form action="" method="post">
+		{{csrf}}
+		<label for="budgetname">Budget Name</label>
+		<input type="text" name="budgetname" id="budgetname">
+		<br>
+        <label for="budgethousing">Housing Budget</label>
+        <input id="budgethousing" name="budgethousing" type="number" min="0" step="0.00000001" value="{{budgethousing}}" required inputmode="numeric">
+		<br>
+        <label for="budgetfood">Food Budget</label>
+        <input id="budgetfood" name="budgetfood" type="number" min="0" step="0.00000001" value="{{budgetfood}}" required inputmode="numeric">
+		<br>
+        <label for="budgettransportation">Transportation Budget</label>
+        <input id="budgettransportation" name="budgettransportation" type="number" min="0" step="0.00000001" value="{{budgettransportation}}" required inputmode="numeric">
+		<br>
+        <label for="budgetutilities">Utilities Budget</label>
+        <input id="budgetutilities" name="budgetutilities" type="number" min="0" step="0.00000001" value="{{budgetutilities}}" required inputmode="numeric">
+		<br> 
+        <label for="budgetinsurance">Insurance Budget</label>
+        <input id="budgetinsurance" name="budgetinsurance" type="number" min="0" step="0.00000001" value="{{budgetinsurance}}" required inputmode="numeric">
+		<br>
+        <label for="budgetmedical">Medical &amp; Healthcare Budget</label>
+        <input id="budgetmedical" name="budgetmedical" type="number" min="0" step="0.00000001" value="{{budgetmedical}}" required inputmode="numeric">
+		<br>   
+        <label for="budgetsaving">Saving Budget</label>
+        <input id="budgetsaving" name="budgetsaving" type="number" min="0" step="0.00000001" value="{{budgetsaving}}" required inputmode="numeric">
+		<br>
+        <label for="budgetdebt">Debt Budget</label>
+        <input id="budgetdebt" name="budgetdebt" type="number" min="0" step="0.00000001" value="{{budgetdebt}}" required inputmode="numeric">
+		<br>
+        <label for="budgetentertainment">Entertainment Budget</label>
+        <input id="budgetentertainment" name="budgetentertainment" type="number" min="0" step="0.00000001" value="{{budgetentertainment}}" required inputmode="numeric">
+		<br>
+		<label for="budgetsubscription">Subscription Budget</label>
+        <input id="budgetsubscription" name="budgetsubscription" type="number" min="0" step="0.00000001" value="{{budgetsubscription}}" required inputmode="numeric">
+		<br>
+        <label for="budgetother">Other Budget</label>
+        <input id="budgetother" name="budgetother" type="number" min="0" step="0.00000001" value="{{budgetother}}" required inputmode="numeric">
+		<br>
+
+    	<input type="submit" name="makebudget" value="Submit Budget" class="button btngreen"> <span class="button btngrey" id="close">Close</span>
+</form>
+	</div>
+	<script nonce="{{cspnonce}}">
+		"use strict";
+		document.addEventListener("DOMContentLoaded", function () {
+		
+			const amounts 			= document.querySelectorAll(".difamount");
+			const newBudget 		= document.getElementById("newbudget");
+			const newBudgetButton 	= document.getElementById("newbudgetbutton");
+			const barFills			= document.querySelectorAll('.barfill');
+			const closeBtn			= document.getElementById("close");
+
+			newBudget.style.display = "none";
+
+			amounts.forEach(el => {
+				
+				const value = parseFloat(el.textContent.trim());
+
+				if (!isNaN(value) && value < 0) 
+				{
+					 el.classList.add("inthered");
+				}
+			});
+
+			newBudgetButton.addEventListener("click",function(){
+				newBudget.style.display = "block";
+				newBudget.scrollIntoView({ behavior: "smooth", block: "start" });
+			});
+			
+			closeBtn.addEventListener("click", function() {
+    				newBudget.style.display = "none";
+			});
+
+			barFills.forEach(function(bar) {
+    		
+				if(bar.dataset.perc >= 80 && !bar.dataset.saving)
+				{	
+					bar.classList.remove('barfillgreen');
+					bar.classList.add('barfillred');
+					
+					if(bar.dataset.perc > 100)
+					{
+						bar.style.width = '100%';
+					}
+				}
+			});
+
+		});
+		
+	</script>
+</body>
+</html>

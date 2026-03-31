@@ -1,0 +1,8 @@
+<tr>
+    <td>{{postedat}}</td>
+    <td>{{account}}</td>
+    <td class="amountcell">{{currency}} {{amount}}</td>
+    <td>{{category}}</td>
+    <td>{{description}}</td>
+	<td><form method="post" action=""><input type="hidden" name="csrftoken" value="{{csrf}}"><input type="hidden" name="transactionid" value="{{id}}"><input type="submit" name="deletetransaction" value="delete" class="button btnred"></form>
+</tr>

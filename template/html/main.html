@@ -1,0 +1,250 @@
+	{{siteheader}}
+	{{statusmessage}}
+	{{menu}}
+	<div id="controls">
+		<div id="controlbuttons">
+			<div class="bigbutton" id="min">
+				Money In 🤑
+			</div>
+			<div class="bigbutton" id="mout">
+				Money Out 💸
+			</div>
+			<div class="bigbutton" id="movem">
+				Move money 💱
+			</div>
+		</div>
+		<div class="back button btngrey" id="backbtn">
+				Back
+		</div> 
+		<div id="transactionform"  class="panel">
+			<div id="transactiontitle" class="transactiontitle"></div>
+			<form method="post" action="?view=main">
+				{{csrf}}
+				<input type="hidden" name="direction" id="direction" value="from">
+				<label for="amount" class="transactionlabel">Amount:</label><input type="text" min="0.00000001" step="0.00000001" inputmode="decimal" name="amount" id="amount" required><br>
+				<label for="account" class="transactionlabel"><span id="fromorto">From</span>:</label><select name="account" id="account" required>
+						<option value="">Please Select</option>
+						{{accounts}}
+					</select>
+				<br>
+				<div id="transactionbudget">
+				<hr>
+				<label>Budget category: <select name="budget" id="budgetselect" required>
+						<option value="">Please Select</option>
+						<option value="housing">Housing</option>
+						<option value="food">Food</option>
+						<option value="transportation">Transportation</option>
+						<option value="utilities">Utilities</option>
+						<option value="insurance">Insurance</option>
+						<option value="medical">Medical & Healthcare</option>
+						<option value="saving">Saving</option>
+						<option value="debt">Debt</option>
+						<option value="subscription">Subscription</option>
+						<option value="entertainment">Entertainment</option>
+						<option value="other">Other</option>
+					</select></label>
+					<hr>
+				</div><br>
+				{{wantsneeds}}
+				<label  class="transactionlabel" for="transactiondesc">Description:</label><input type="text" name="description" id="transactiondesc"><br>
+				<input type="submit" name="transaction" value="Post Transaction" class="button btngreen">
+			</form>
+		</div>
+		<div id="transferform"  class="panel">
+			<div id="transfertitle">Money moves between accounts</div>
+			<form method="post" action="?view=main">
+				{{csrf}}
+				<label for="moveamount" class="transactionlabel">Amount:</label><input type="text" min="0.00000001" step="0.00000001" inputmode="decimal" name="amount" id="moveamount"><br>
+				<label class="transactionlabel" for="fromselect">From:</label><select name="from" id="fromselect" required>
+					<option value="">Please Select</option>	
+					{{accounts-move}}
+					</select><br>
+				<label class="transactionlabel" for="toselect">To:</label><select name="to" id="toselect" required>
+						<option value="">Please Select</option>	
+						{{accounts-move}}
+					</select><br>
+				<label id="othercurrency">Amount (<span id="currencylabel"></span>): <input type="text"  min="0.00000001" step="0.00000001" inputmode="decimal" name="amountother"></label><br>
+				
+				<label class="transactionlabel" for="movedesc">Description:</label><input type="text" name="description" id="movedesc"><br>
+				<input type="submit" name="move" value="Move" class="button btngreen">
+			</form>
+		</div>
+
+	</div>
+	<div id="currencyamount" class="roundtablewrapper">
+		<table class="norowstyle">
+			<thead>
+				<tr><th>Currency</th><th>Amount</th></tr>
+			</thead>
+			<tbody>
+				{{amounts}}
+			</tbody>
+		</table>
+	</div>
+	<script nonce="{{cspnonce}}">
+		"use strict";
+		document.addEventListener('DOMContentLoaded', function () {
+   
+			const backBtn           = document.getElementById('backbtn');
+			const budgetCat         = document.querySelector('select[name="budget"]');
+			const wantsAndNeedsForm = document.getElementById('wantsneedsform');
+			const transactionForm   = document.getElementById('transactionform');
+			const fromOrTo          = document.getElementById('fromorto');
+			const directionInput    = document.getElementById('direction');
+			const transactionTitle  = document.getElementById('transactiontitle');
+			const wantsNeedsForm    = document.getElementById('wantsneedsform');
+			const transactionBudget = document.getElementById('transactionbudget');
+			const controlButtons    = document.getElementById('controlbuttons');
+			const minBtn            = document.getElementById('min');
+			const moutBtn           = document.getElementById('mout');
+			const movemBtn          = document.getElementById('movem');
+			const transferForm      = document.getElementById('transferform');
+			const otherCurrency     = document.getElementById('othercurrency');
+			const currencyLabel     = document.getElementById('currencylabel');
+			const fromSelect        = document.getElementById('fromselect');
+			const toSelect          = document.getElementById('toselect');
+			const budgetSelect		= document.getElementById('budgetselect');
+			const wantsNeedsRadios 	= document.querySelectorAll('input[name="wantsneeds"]');
+			const backButtons		= document.querySelectorAll('.back');
+			const decimalInputs		= document.querySelectorAll('input[inputmode="decimal"]');
+			const transactionAmount = document.getElementById('amount');
+			const moveAmount		= document.getElementById('moveamount');
+
+			backBtn.style.display = 'none';
+			otherCurrency.style.display = 'none';
+			
+			if(wantsNeedsForm){
+				budgetCat.addEventListener('change', function () {
+					if (this.value === 'saving') {
+						wantsAndNeedsForm.style.display = 'none';
+					} else {
+						wantsAndNeedsForm.style.display = 'block';
+					}
+				});
+			}
+			budgetCat.dispatchEvent(new Event('change'));
+
+			function openExternalMoneyForm(direction) {
+				transactionForm.style.display = 'block';
+		
+				transactionAmount.focus();
+				
+				preventFocusScroll();
+				
+
+				fromOrTo.textContent = capitalize(direction);
+				directionInput.value = direction;
+
+				var isFrom = direction === 'from';
+
+				transactionBudget.style.display = isFrom ? 'block' : 'none';
+				
+				transactionTitle.textContent = isFrom ? "Money goes out" : "Money comes in";
+
+				budgetSelect.disabled = !isFrom;
+
+				if(wantsNeedsForm)
+					wantsNeedsForm.style.display = isFrom  ? 'block' : 'none';
+
+				if(wantsNeedsForm)
+					wantsNeedsRadios.forEach(radio => radio.disabled = !isFrom);
+
+				hideControls();
+				showBackButton();
+			}
+
+			function showBackButton() {
+				backBtn.style.display = 'block';
+			}
+
+			function hideControls() {
+				controlButtons.style.display = 'none';
+			}
+
+			function capitalize(str) {
+				return str[0].toUpperCase() + str.slice(1);
+			}
+
+			minBtn.addEventListener('click', () => openExternalMoneyForm('to'));
+			moutBtn.addEventListener('click', () => openExternalMoneyForm('from'));
+
+			movemBtn.addEventListener('click', () => {
+				transferForm.style.display = 'block';
+				
+				moveAmount.focus();
+				
+				preventFocusScroll();
+
+				showBackButton();
+				hideControls();
+			});
+
+			backButtons.forEach(el => {
+				el.addEventListener('click', () => {
+					controlButtons.style.display = 'block';
+					transactionForm.style.display = 'none';
+					transferForm.style.display = 'none';
+					backBtn.style.display = 'none';
+				});
+			});
+			
+			transferForm.addEventListener('submit', function(e) {
+				const fromId = fromSelect.value.split("_")[0];
+				const toId   = toSelect.value.split("_")[0];
+
+				if (fromId === toId) {
+					e.preventDefault();
+					alert('Please select two different accounts.');
+				}
+			});
+			
+			function handleFromToChange() {
+			
+				const fromCurrency = fromSelect.value.split("_")[1];
+				const toCurrency   = toSelect.value.split("_")[1];
+
+				otherCurrency.style.display = 'none';
+				if (fromCurrency !== toCurrency) {
+					otherCurrency.style.display = 'block';
+					currencyLabel.textContent = toCurrency;
+				}
+			}
+			
+			function preventFocusScroll()
+			{
+				const scrollPos = window.pageYOffset;
+				setTimeout(() => {
+					window.scrollTo(0, scrollPos);
+				}, 100);
+			}
+       
+         	decimalInputs.forEach(input => {
+        		input.addEventListener('input', function(e) {
+            
+            		if (this.value.endsWith(',')) {
+                
+						e.preventDefault();
+						
+						
+						const start = this.selectionStart;
+						const end = this.selectionEnd;
+						
+					
+						const newValue = this.value.slice(0, -1) + '.';
+						
+					
+						this.value = newValue;
+						
+					
+						this.setSelectionRange(start, start);
+					}
+        		});
+
+    		});
+			
+			fromSelect.addEventListener('change', handleFromToChange);
+			toSelect.addEventListener('change', handleFromToChange);
+		});
+	</script>
+</body>
+</html>
