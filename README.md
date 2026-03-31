@@ -17,9 +17,11 @@ A small PHP application to keep track of your money. Self hosted, open source an
 <sub>Bear with me, it is not well tought out, but not hard either.</sub>
 1. Copy everything to your server wherever you want it to run.
 2. In `require/head.php` you should change the APPKEY value. This is the pepper for your password.
-3. In `index.php` comment out the password generator and put your first password in the `var_dump($pw ->createPasswordHash('[your pw]'));` line. Run the application. Copy the username:passwordhash: text into the auth.yzhk file (keep all the : ). You can change the username in this file too.
-4. Optional: change database name and auth file name in `head.php`, if you do so rename the files as such.
-5. Absolutely needed: hide these files with .htaccess
+3. In `index.php` comment out the password generator and put your first password in the `var_dump($pw ->createPasswordHash('[your pw]'));` line. Run the application. Copy the username:passwordhash: text into the auth.yzhk file (keep all the ":" ). You can change the username in this file too.
+4. Comment out the password generator in `index.php`.
+5. After logging in go to settings and change your password properly. If you lose your password repeat steps 3 to 5.
+6. Optional: change database name and auth file name in `head.php`, if you do so rename the files as such.
+7. Absolutely needed: hide these files with .htaccess
   ```
   <FilesMatch "^(auth\.yzhk|main\.db)$">
       Require all denied
