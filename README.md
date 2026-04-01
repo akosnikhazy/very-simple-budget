@@ -5,7 +5,7 @@ A small PHP application to keep track of your money. Self hosted, open source an
 ><sub>I made this for myself. By the license, you can do whatever you want with it. It works for me. I keep track of my money with it the way that's comfortable for me. I made it because managing several accounts was annoying in Google Sheets. Also, existing budgeting apps are too convoluted and feature-rich (and expensive) for my own use case. This is the bare minimum a budgeting app needs, and the maximum I need.</sub>
 
 # Features
-- Log transactions with three easy buttons: Money In, Money Out, Move Money (between accounts). Select a category, and account and you are post it.
+- Log transactions with three easy buttons: Money In, Money Out, Move Money (between accounts). Select a category, and account and post it.
 - Monthly budget in your base currency. Set limits on your spending by category. At a glance, you can see how much you can spend in a given category this month.
 - Transaction ledger shows every transaction you made. You can disable transactions without deleting them to exclude them from every calculation.
 - Add accounts, cash or digital, in every currency of the world. Note: only your base currency counts towards the budget.
