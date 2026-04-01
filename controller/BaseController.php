@@ -175,7 +175,7 @@ abstract class BaseController
         header('Content-Security-Policy: ' . implode('; ', [
             "default-src 'self'",
             "script-src 'self' 'nonce-{$nonce}'",
-            "style-src 'self'",
+            "style-src 'self' 'unsafe-inline'",
             "img-src 'self' data:",
             "font-src 'self'",
             "form-action 'self'",
