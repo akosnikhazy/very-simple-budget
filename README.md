@@ -23,7 +23,7 @@ A small PHP application to keep track of your money. Self hosted, open source an
 6. Optional: change database name and auth file name in `head.php`, if you do so rename the files as such.
 7. Absolutely needed: hide these files with .htaccess
   ```
-  <FilesMatch "^(auth\.yzhk|main\.db)$">
-      Require all denied
-  </FilesMatch>
+  <FilesMatch "\.(db|yzhk)$">
+    Require all denied
+</FilesMatch>
   ```
